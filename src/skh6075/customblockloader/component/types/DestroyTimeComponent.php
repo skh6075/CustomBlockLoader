@@ -7,10 +7,10 @@ namespace skh6075\customblockloader\component\types;
 use pocketmine\nbt\tag\CompoundTag;
 use skh6075\customblockloader\component\BlockComponent;
 
-class ExplosionResistanceComponent extends BlockComponent{
+class DestroyTimeComponent extends BlockComponent{
 
 	public function __construct(private float $value = 0.0){
-		parent::__construct("minecraft:explosion_resistance");
+		parent::__construct("minecraft:destroy_time");
 	}
 
 	public function toComponent() : CompoundTag{
