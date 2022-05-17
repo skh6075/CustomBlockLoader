@@ -19,8 +19,6 @@ final class CustomBlockPalette{
 
 	private RuntimeBlockMapping $runtimeBlockMapping;
 
-	private Closure $overrideClosure;
-
 	/**
 	 * @phpstan-var array<int, CompoundTag>
 	 * @var CompoundTag[]
@@ -42,7 +40,6 @@ final class CustomBlockPalette{
 			newThis: null,
 			newScope: RuntimeBlockMapping::class
 		)($this->runtimeBlockMapping);
-		$this->overrideClosure = function(): void{ };
 	}
 
 	public function getOriginStates(): array{
