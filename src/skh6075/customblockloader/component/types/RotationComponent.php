@@ -11,7 +11,7 @@ use pocketmine\nbt\tag\ListTag;
 use skh6075\customblockloader\component\BlockComponent;
 use function round;
 
-class RotationComponentI extends BlockComponent{
+class RotationComponent extends BlockComponent{
 
 	public function __construct(private Vector3 $rotation){
 		parent::__construct("minecraft:rotation");

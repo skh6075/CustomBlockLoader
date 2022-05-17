@@ -8,7 +8,7 @@ use InvalidArgumentException;
 use pocketmine\nbt\tag\CompoundTag;
 use skh6075\customblockloader\component\BlockComponent;
 
-class MaterialComponentI extends BlockComponent{
+class MaterialComponent extends BlockComponent{
 
 	private CompoundTag $mergeComponent;
 
