@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace skh6075\customblockloader\component\types;
 
+use InvalidArgumentException;
 use pocketmine\nbt\tag\CompoundTag;
 use skh6075\customblockloader\component\BlockComponent;
+use function preg_match;
 
 class MapColorComponent extends BlockComponent{
 
@@ -16,7 +18,7 @@ class MapColorComponent extends BlockComponent{
 	public function isValid() : void{
 		if(!preg_match('/^#[a-f0-9]{6}$/i', $this->color)){
 			if(!preg_match('/^[a-f0-9]{6}$/i', $this->color)){
-				throw new \InvalidArgumentException("color value can only use hex color code");
+				throw new InvalidArgumentException("color value can only use hex color code");
 			}
 			$this->color = "#$this->color";
 		}
