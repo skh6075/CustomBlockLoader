@@ -7,12 +7,10 @@ namespace skh6075\customblockloader\component\types;
 use pocketmine\nbt\tag\CompoundTag;
 use skh6075\customblockloader\component\BlockComponent;
 
-class UnwalkableComponent implements BlockComponent{
+class UnwalkableComponentI extends BlockComponent{
 
-	public function __construct(private bool $value = true){}
-
-	public function getName(): string{
-		return "minecraft:unwalkable";
+	public function __construct(private bool $value = true){
+		parent::__construct("minecraft:unwalkable");
 	}
 
 	public function toComponent() : CompoundTag{

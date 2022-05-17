@@ -1,14 +1,21 @@
 <?php
 
-declare(strict_types=1);
-
 namespace skh6075\customblockloader\component;
 
-use pocketmine\nbt\tag\CompoundTag;
+abstract class BlockComponent implements IBlockComponent{
 
-interface BlockComponent{
+	private string $identifier;
 
-	public function getName(): string;
+	public function __construct(string $identifier){
+		$this->identifier = $identifier;
+		$this->isValid();
+	}
 
-	public function toComponent(): CompoundTag;
+	public function getName() : string{
+		return $this->identifier;
+	}
+
+	public function isValid() : void{
+		// TODO: Implement isValid() method.
+	}
 }
