@@ -15,6 +15,6 @@ class GeometryComponent extends BlockComponent{
 
 	public function toComponent() : CompoundTag{
 		//Block geometry only supports cube...
-		return CompoundTag::create()->setString($this->getName(), "cube");
+		return CompoundTag::create()->setString("value", "cube");
 	}
 }

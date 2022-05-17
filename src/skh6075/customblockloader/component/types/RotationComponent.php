@@ -19,7 +19,7 @@ class RotationComponent extends BlockComponent{
 
 	public function toComponent() : CompoundTag{
 		return CompoundTag::create()
-			->setTag($this->getName(), new ListTag([
+			->setTag("value", new ListTag([
 				round($this->rotation->x, 1),
 				round($this->rotation->y, 1),
 				round($this->rotation->z, 1)

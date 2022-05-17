@@ -21,6 +21,6 @@ class FrictionComponent extends BlockComponent{
 	}
 
 	public function toComponent() : CompoundTag{
-		return CompoundTag::create()->setFloat($this->getName(), $this->value);
+		return CompoundTag::create()->setFloat("value", $this->value);
 	}
 }

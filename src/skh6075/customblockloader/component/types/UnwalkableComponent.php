@@ -15,6 +15,6 @@ class UnwalkableComponent extends BlockComponent{
 
 	public function toComponent() : CompoundTag{
 		return CompoundTag::create()
-			->setByte($this->getName(), $this->value ? 1 : 0);
+			->setByte("value", $this->value ? 1 : 0);
 	}
 }

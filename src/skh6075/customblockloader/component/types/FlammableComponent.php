@@ -25,7 +25,7 @@ class FlammableComponent extends BlockComponent{
 
 	public function toComponent() : CompoundTag{
 		return CompoundTag::create()
-			->setTag($this->getName(), CompoundTag::create()
+			->setTag("value", CompoundTag::create()
 				->setInt("burn_odds", $this->burn_odds)
 				->setInt("flame_odds", $this->flame_odds)
 			);

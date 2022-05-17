@@ -21,6 +21,6 @@ class BreathabilityComponent extends BlockComponent{
 	}
 
 	public function toComponent() : CompoundTag{
-		return CompoundTag::create()->setString($this->getName(), $this->value);
+		return CompoundTag::create()->setString("value", $this->value);
 	}
 }

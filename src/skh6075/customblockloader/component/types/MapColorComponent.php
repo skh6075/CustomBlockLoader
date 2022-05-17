@@ -25,6 +25,6 @@ class MapColorComponent extends BlockComponent{
 	}
 
 	public function toComponent() : CompoundTag{
-		return CompoundTag::create()->setString($this->getName(), $this->color);
+		return CompoundTag::create()->setString("value", $this->color);
 	}
 }

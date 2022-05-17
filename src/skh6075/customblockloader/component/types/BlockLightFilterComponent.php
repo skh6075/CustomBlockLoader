@@ -21,6 +21,6 @@ class BlockLightFilterComponent extends BlockComponent{
 	}
 
 	public function toComponent() : CompoundTag{
-		return CompoundTag::create()->setInt($this->getName(), $this->value);
+		return CompoundTag::create()->setInt("value", $this->value);
 	}
 }

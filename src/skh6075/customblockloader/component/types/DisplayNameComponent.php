@@ -14,6 +14,7 @@ class DisplayNameComponent extends BlockComponent{
 	}
 
 	public function toComponent() : CompoundTag{
-		return CompoundTag::create()->setString($this->getName(), $this->name);
+		return CompoundTag::create()
+			->setString("value", $this->name);
 	}
 }

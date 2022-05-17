@@ -4,3 +4,5 @@ author: skh6075
 version: 0.0.1-DEVELOP
 api: 4.0.0
 website: https://github.com/skh6075/CustomBlockLoader
+depend: ['DEVirion']
+virions: ['IdentifierUtils']

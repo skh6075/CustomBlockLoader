@@ -24,6 +24,6 @@ class LootComponent extends BlockComponent{
 	}
 
 	public function toComponent() : CompoundTag{
-		return CompoundTag::create()->setString($this->getName(), "$this->behavior_path/$this->json");
+		return CompoundTag::create()->setString("value", "$this->behavior_path/$this->json");
 	}
 }

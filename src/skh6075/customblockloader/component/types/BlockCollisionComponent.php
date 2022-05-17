@@ -38,6 +38,6 @@ class BlockCollisionComponent extends BlockComponent{
 
 	public function toComponent() : CompoundTag{
 		// I don't know.... plz help me !!
-		return CompoundTag::create()->setByte($this->getName(), 0);
+		return CompoundTag::create()->setByte("value", 0);
 	}
 }

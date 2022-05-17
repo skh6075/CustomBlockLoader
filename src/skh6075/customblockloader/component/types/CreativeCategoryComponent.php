@@ -37,6 +37,6 @@ class CreativeCategoryComponent extends BlockComponent{
 		if($this->group !== null){
 			$nbt->setString("group", $this->group);
 		}
-		return CompoundTag::create()->setTag($this->getName(), $nbt);
+		return CompoundTag::create()->setTag("value", $nbt);
 	}
 }

@@ -10,8 +10,6 @@ use skh6075\customblockloader\component\BlockComponent;
 
 class MaterialComponent extends BlockComponent{
 
-	private CompoundTag $mergeComponent;
-
 	private bool $used_newInstance = false;
 
 	public function __construct(
@@ -21,7 +19,6 @@ class MaterialComponent extends BlockComponent{
 		private bool $face_dimming = true
 	){
 		parent::__construct("minecraft:material_instances");
-		$this->mergeComponent = CompoundTag::create();
 	}
 
 	public function isValid() : void{
@@ -31,15 +28,15 @@ class MaterialComponent extends BlockComponent{
 	}
 
 	public function toComponent() : CompoundTag{
-		$this->mergeComponent->setTag(match($this->used_newInstance){
-			true => "NewInstance",
-			false => "*"
-		}, CompoundTag::create()
-			->setString("texture", $this->texture)
-			->setString("render_method", $this->render_method)
-			->setByte("ambient_occlusion", $this->ambient_occlusion ? 1 : 0)
-			->setByte("face_dimming", $this->face_dimming ? 1 : 0)
-		);
-		return CompoundTag::create()->setTag($this->getName(), $this->mergeComponent);
+		return CompoundTag::create()
+			->setTag("mappings", CompoundTag::create())
+			->setTag("materials", CompoundTag::create()
+				->setTag("*", CompoundTag::create()
+					->setByte("ambient_occlusion", $this->ambient_occlusion ? 1 : 0)
+					->setByte("face_dimming", $this->face_dimming ? 1 : 0)
+					->setString("texture", $this->texture)
+					->setString("render_method", $this->render_method)
+				)
+			);
 	}
 }
