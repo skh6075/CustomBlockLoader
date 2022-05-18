@@ -11,7 +11,6 @@ use pocketmine\network\mcpe\protocol\ResourcePackStackPacket;
 use pocketmine\network\mcpe\protocol\StartGamePacket;
 use pocketmine\network\mcpe\protocol\types\Experiments;
 use pocketmine\plugin\PluginBase;
-use pocketmine\scheduler\ClosureTask;
 use RuntimeException;
 
 final class CustomBlockLoader extends PluginBase implements Listener{
@@ -34,12 +33,6 @@ final class CustomBlockLoader extends PluginBase implements Listener{
 		], true);
 
 		$this->getServer()->getPluginManager()->registerEvents($this, $this);
-
-		$this->getScheduler()->scheduleRepeatingTask(new ClosureTask(function(): void{
-			foreach($this->getServer()->getOnlinePlayers() as $player){
-				$player->getInventory()->addItem($this->customBlockManager->get("custom:test_block")->asItem());
-			}
-		}), 20);
 	}
 
 	/**
