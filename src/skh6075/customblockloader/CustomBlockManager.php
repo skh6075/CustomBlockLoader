@@ -19,6 +19,7 @@ use pocketmine\network\mcpe\protocol\serializer\NetworkNbtSerializer;
 use pocketmine\network\mcpe\protocol\serializer\PacketSerializer;
 use pocketmine\network\mcpe\protocol\serializer\PacketSerializerContext;
 use pocketmine\network\mcpe\protocol\types\BlockPaletteEntry;
+use pocketmine\network\mcpe\protocol\types\ItemTypeEntry;
 use pocketmine\Server;
 use pocketmine\utils\SingletonTrait;
 use ReflectionClass;
@@ -149,11 +150,10 @@ final class CustomBlockManager{
 		}
 
 		$this->blockFactory->register($customBlock);
-		IdentifierUtils::registerItem($info->getStringId(), $customBlock->getId());
+		IdentifierUtils::registerItem($info->getStringId(), 255 - $customBlock->getId());
 		$this->blockPalette->registerState($info->getBlockState());
 
 		$this->customBlocks[$info->getStringId()] = $customBlock;
-
 
 		Closure::bind( //HACK: Closure bind hack to access inaccessible members
 			closure: static function(LegacyToStringBidirectionalIdMap $map, CustomBlock $customBlock) : void{
@@ -180,5 +180,10 @@ final class CustomBlockManager{
 	/** @return BlockPaletteEntry[] */
 	public function getBlockPalettes(): array{
 		return array_map(static fn(CustomBlock $block): BlockPaletteEntry => $block->getCustomBlockInfo()->toBlockPaletteEntry(), $this->customBlocks);
+	}
+
+	/** @return ItemTypeEntry[] */
+	public function getBlockItemTypeEntries(): array{
+		return array_map(static fn(CustomBlock $block): ItemTypeEntry => new ItemTypeEntry($block->getCustomBlockInfo()->getStringId(), 255 - $block->getId(), false), $this->customBlocks);
 	}
 }

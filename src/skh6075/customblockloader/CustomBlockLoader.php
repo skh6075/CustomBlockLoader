@@ -7,9 +7,11 @@ namespace skh6075\customblockloader;
 use kim\present\utils\identifier\IdentifierUtils;
 use pocketmine\event\Listener;
 use pocketmine\event\server\DataPacketSendEvent;
+use pocketmine\network\mcpe\protocol\ResourcePackStackPacket;
 use pocketmine\network\mcpe\protocol\StartGamePacket;
 use pocketmine\network\mcpe\protocol\types\Experiments;
 use pocketmine\plugin\PluginBase;
+use pocketmine\scheduler\ClosureTask;
 use RuntimeException;
 
 final class CustomBlockLoader extends PluginBase implements Listener{
@@ -32,13 +34,19 @@ final class CustomBlockLoader extends PluginBase implements Listener{
 		], true);
 
 		$this->getServer()->getPluginManager()->registerEvents($this, $this);
+
+		$this->getScheduler()->scheduleRepeatingTask(new ClosureTask(function(): void{
+			foreach($this->getServer()->getOnlinePlayers() as $player){
+				$player->getInventory()->addItem($this->customBlockManager->get("custom:test_block")->asItem());
+			}
+		}), 20);
 	}
 
 	/**
 	 * @priority MONITOR
 	 * @ignoreCancelled false
 	 */
-	public function onDataPacketSendEvent(DataPacketSendEvent $event): void{
+	public function onDataPacketSendEvent(DataPacketSendEvent $event) : void{
 		$customBlockPalette = $this->customBlockManager->getBlockPalettes();
 		$customBlockCount = count($customBlockPalette);
 		if($customBlockCount === 0){
@@ -47,11 +55,10 @@ final class CustomBlockLoader extends PluginBase implements Listener{
 		foreach($event->getPackets() as $packet){
 			if($packet instanceof StartGamePacket){
 				$packet->levelSettings->experiments = $this->experiments;
-				if(empty($packet->blockPalette)){
-					$packet->blockPalette = $customBlockPalette;
-				}else{
-					$packet->blockPalette = array_merge($packet->blockPalette, $customBlockPalette);
-				}
+				$packet->itemTable = $this->customBlockManager->getBlockItemTypeEntries();
+				$packet->blockPalette = $this->customBlockManager->getBlockPalettes();
+			}else if($packet instanceof ResourcePackStackPacket){
+				$packet->experiments = $this->experiments;
 			}
 		}
 	}
