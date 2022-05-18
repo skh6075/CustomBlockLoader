@@ -33,13 +33,7 @@ final class CustomBlockPalette{
 
 	private function __construct(){
 		$this->runtimeBlockMapping = RuntimeBlockMapping::getInstance();
-		Closure::bind(
-			closure: function(RuntimeBlockMapping $mapping): void{
-				$this->originStates = $mapping->bedrockKnownStates;
-			},
-			newThis: null,
-			newScope: RuntimeBlockMapping::class
-		)($this->runtimeBlockMapping);
+		$this->originStates = $this->runtimeBlockMapping->getBedrockKnownStates();
 	}
 
 	public function getOriginStates(): array{

@@ -4,8 +4,12 @@ declare(strict_types=1);
 
 namespace skh6075\customblockloader\block;
 
+use pocketmine\block\BlockIdentifier;
 use pocketmine\nbt\tag\CompoundTag;
+use pocketmine\network\mcpe\protocol\types\BlockPaletteEntry;
+use pocketmine\network\mcpe\protocol\types\CacheableNbt;
 use skh6075\customblockloader\component\BlockComponent;
+use skh6075\customblockloader\CustomBlockManager;
 
 class CustomBlockInfo{
 
@@ -15,22 +19,28 @@ class CustomBlockInfo{
 	 */
 	private array $components = [];
 
-	public function __construct(
-		private string $identifier,
-		private int $legacyId,
-		private int $legacyMeta = 0
-	){}
+	private int $legacyId;
 
-	public function getIdentifier(): string{
-		return $this->identifier;
+	public function __construct(private string $stringId){
+		$this->legacyId = CustomBlockManager::getInstance()->getNextAvailableId();
 	}
 
-	public function getLegacyId(): int{
-		return $this->legacyId;
+	public function getStringId(): string{
+		return $this->stringId;
 	}
 
-	public function getLegacyMeta(): int{
-		return $this->legacyMeta;
+	public function getBlockState(): CompoundTag{
+		return CompoundTag::create()
+			->setString("name", $this->stringId)
+			->setTag("states", CompoundTag::create());
+	}
+
+	public function toBlockIdentifier(?string $tileClass = null): BlockIdentifier{
+		return new BlockIdentifier($this->legacyId, 0, $this->legacyId, $tileClass);
+	}
+
+	public function toBlockPaletteEntry(): BlockPaletteEntry{
+		return new BlockPaletteEntry($this->stringId, new CacheableNbt($this->nbtSerialize()));
 	}
 
 	public function addComponent(BlockComponent $component): self{
@@ -46,10 +56,8 @@ class CustomBlockInfo{
 		$nbt = CompoundTag::create();
 		$componentNBT = CompoundTag::create();
 		$nbt->setInt("molangVersion", 1);
-		if(count($this->components) > 0){
-			foreach($this->components as $component){
-				$componentNBT->setTag($component->getName(), $component->toComponent());
-			}
+		foreach($this->components as $component){
+			$componentNBT->setTag($component->getName(), $component->toComponent());
 		}
 		$nbt->setTag("components", $componentNBT);
 		return $nbt;
